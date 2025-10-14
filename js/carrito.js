@@ -37,32 +37,31 @@ function guardarCarritoEnLocalStorage() {
 // =========================================================
 
 // 🔹 Detectar clic en los botones "AGREGAR" de los productos de catálogo
-// NOTA: Esta función debe ser llamada después de que los productos se renderizan
-// 🛑 MODIFICACIÓN CLAVE: EXPORTAR la función para que 'productos.js' pueda llamarla
 export function agregarListenersCatalogo() {
     document.querySelectorAll(".agregar").forEach((boton) => {
         boton.addEventListener("click", () => {
             // Buscamos el contenedor padre con la clase '.producto'
-            let producto = boton.closest(".producto"); 
-            
-            // Si por alguna razón no lo encuentra, salimos
+            let producto = boton.closest(".producto");
+
             if (!producto) return;
 
-            // Extraemos los datos del DOM
+            // 🛑 CORRECCIÓN/OPTIMIZACIÓN: Leer el data-id directamente del botón (ya es string)
+            let id = boton.getAttribute("data-id");
             let nombre = producto.querySelector("h3").textContent;
+            // El precio se lee del atributo data-precio del contenedor .producto
             let precio = parseFloat(producto.getAttribute("data-precio"));
-            
+
             // Usamos el input de cantidad asociado al producto
             let cantidadInput = producto.querySelector(".cantidad-input");
             let cantidad = parseInt(cantidadInput.value);
-            
-            let imagen = producto.querySelector("img").src;
-            let id = producto.querySelector(".agregar").getAttribute("data-id"); // Obtener el ID para referencia única
 
-            agregarAlCarrito(id, nombre, precio, cantidad, imagen);
-            
+            let imagen = producto.querySelector("img").src;
+
+            // Llamamos a la función unificada de agregar
+            agregarProductoPorID(id, cantidad, nombre, precio, imagen);
+
             // Reiniciar la cantidad en el input del catálogo a 1 después de agregar
-            cantidadInput.value = 1; 
+            cantidadInput.value = 1;
         });
     });
 
@@ -70,6 +69,7 @@ export function agregarListenersCatalogo() {
     document.querySelectorAll(".incrementar").forEach(boton => {
         boton.addEventListener("click", () => {
             const input = boton.closest(".cantidad").querySelector(".cantidad-input");
+            // Asegúrate de no exceder el stock (aunque esto requeriría consultar Supabase aquí)
             input.value = parseInt(input.value) + 1;
         });
     });
@@ -85,21 +85,37 @@ export function agregarListenersCatalogo() {
     });
 }
 
-// Mantenemos la función de agregarAlCarrito con un ID para mejor manejo
-// 🛑 MODIFICACIÓN CLAVE: EXPORTAR la función
-export function agregarAlCarrito(id, nombre, precio, cantidad, imagen) {
-    // Usamos el ID como identificador único, no solo el nombre
-    let existe = carrito.find(item => item.id === id); 
+// 🛑 FUNCIÓN UNIFICADA DE AGREGAR PRODUCTO (EXPORTADA)
+// USADA POR catálogo (productos.js) y detalle de producto (detalleProducto.js)
+export async function agregarProductoPorID(id, cantidad, nombre = null, precio = null, imagen = null) {
+
+    // ✅ CORRECCIÓN CLAVE: Convertir el ID de entrada a string para asegurar la consistencia.
+    const idString = String(id);
+
+    // 🛑 CORRECCIÓN CLAVE: Buscamos el producto en el carrito por ID, asegurando que
+    // AMBOS IDs (el nuevo y los existentes) sean tratados como strings.
+    let existe = carrito.find(item => String(item.id) === idString);
 
     if (existe) {
+        // El producto ya está, SUMAMOS la cantidad.
         existe.cantidad += cantidad;
+    } else if (nombre && precio) {
+        // Es un producto nuevo, lo agregamos, usando el ID ya convertido a string.
+        carrito.push({ id: idString, nombre, precio, cantidad, imagen });
     } else {
-        carrito.push({ id, nombre, precio, cantidad, imagen });
+        console.error("No se puede agregar el producto: faltan datos (nombre o precio).");
+        return false;
     }
 
     guardarCarritoEnLocalStorage();
     actualizarCarrito();
+
+    // Muestra el carrito
+    document.querySelector(".cart-container").classList.add("active");
+
+    return true;
 }
+
 
 // =========================================================
 // LÓGICA DEL CARRITO (RENDERIZADO Y MANIPULACIÓN)
@@ -112,12 +128,11 @@ function actualizarCarrito() {
     let total = 0;
     let totalProductos = 0;
 
-    carrito.forEach((producto, index) => {
+    carrito.forEach((producto) => {
         let div = document.createElement("div");
         div.classList.add("cart-item");
 
         let nombreCorto = producto.nombre.length > 30 ? producto.nombre.substring(0, 30) + "..." : producto.nombre;
-        // Usamos el id del producto en el data-index para que la eliminación/actualización sea precisa
         let subtotal = (producto.precio * producto.cantidad).toFixed(2).replace(".", ",");
         totalProductos += producto.cantidad;
 
@@ -147,29 +162,30 @@ function actualizarCarrito() {
 
     guardarCarritoEnLocalStorage();
 
-    // 🛑 Listener para ELIMINAR (Usando data-id para mejor precisión)
+    // 🛑 Listener para ELIMINAR
     document.querySelectorAll(".eliminar").forEach((boton) => {
         boton.addEventListener("click", () => {
             const idEliminar = boton.getAttribute("data-id");
             let item = boton.closest(".cart-item");
-            
+
             item.style.transition = "opacity 0.3s ease-out, transform 0.3s ease-out";
             item.style.opacity = "0";
             item.style.transform = "scale(0.8)";
 
             setTimeout(() => {
-                // Filtramos el carrito para excluir el producto con el ID coincidente
-                carrito = carrito.filter(item => item.id !== idEliminar);
+                // Aseguramos que el ID del carrito y el ID a eliminar sean strings para la comparación
+                carrito = carrito.filter(item => String(item.id) !== idEliminar);
                 actualizarCarrito();
             }, 300);
         });
     });
 
-    // 🛑 Listener para INCREMENTAR (Usando data-id)
+    // 🛑 Listener para INCREMENTAR
     document.querySelectorAll(".incrementar-carrito").forEach((boton) => {
         boton.addEventListener("click", () => {
             const idIncrementar = boton.getAttribute("data-id");
-            let itemIndex = carrito.findIndex(item => item.id === idIncrementar);
+            // Aseguramos que el ID del carrito sea string para la búsqueda
+            let itemIndex = carrito.findIndex(item => String(item.id) === idIncrementar);
             if (itemIndex > -1) {
                 carrito[itemIndex].cantidad++;
                 actualizarCarrito();
@@ -177,11 +193,12 @@ function actualizarCarrito() {
         });
     });
 
-    // 🛑 Listener para DECREMENTAR (Usando data-id)
+    // 🛑 Listener para DECREMENTAR
     document.querySelectorAll(".decrementar-carrito").forEach((boton) => {
         boton.addEventListener("click", () => {
             const idDecrementar = boton.getAttribute("data-id");
-            let itemIndex = carrito.findIndex(item => item.id === idDecrementar);
+            // Aseguramos que el ID del carrito sea string para la búsqueda
+            let itemIndex = carrito.findIndex(item => String(item.id) === idDecrementar);
 
             if (itemIndex > -1 && carrito[itemIndex].cantidad > 1) {
                 carrito[itemIndex].cantidad--;
@@ -190,6 +207,7 @@ function actualizarCarrito() {
         });
     });
 }
+
 
 // 🛒 Vaciar carrito
 document.querySelector(".vaciar-carrito").addEventListener("click", () => {
@@ -206,62 +224,20 @@ document.addEventListener("click", (event) => {
     const cartIcon = document.querySelector(".cart img");
 
     if (cartContainer && cartIcon) { // Verificar si los elementos existen
-        if (!cartContainer.contains(event.target) && 
-            !cartIcon.contains(event.target) && 
-            !event.target.classList.contains("incrementar-carrito") && 
-            !event.target.classList.contains("decrementar-carrito") && 
-            !event.target.classList.contains("eliminar") && 
-            !event.target.classList.contains("vaciar-carrito") && 
-            !event.target.classList.contains("finalizar-compra") && 
+        // Comprobar si el clic no está en el contenedor del carrito, ni en el ícono
+        // ni en ninguno de los botones de acción dentro del carrito.
+        if (!cartContainer.contains(event.target) &&
+            !cartIcon.contains(event.target) &&
+            !event.target.classList.contains("incrementar-carrito") &&
+            !event.target.classList.contains("decrementar-carrito") &&
+            !event.target.classList.contains("eliminar") &&
+            !event.target.classList.contains("vaciar-carrito") &&
+            !event.target.classList.contains("finalizar-compra") &&
             !event.target.closest(".eliminar")) {
             cartContainer.classList.remove("active");
         }
     }
 });
 
-// =========================================================
-// LÓGICA DE DETALLE DE PRODUCTO INDIVIDUAL
-// =========================================================
-
-// ✅ FUNCIONALIDAD PARA EL PRODUCTO INDIVIDUAL
-const botonAgregarDetalle = document.querySelector(".info-pro-agregar");
-if (botonAgregarDetalle) {
-    botonAgregarDetalle.addEventListener("click", () => {
-        const contenedorProducto = botonAgregarDetalle.closest(".info-pro-producto");
-
-        // Usamos .dataset.id en lugar de .dataset.precio para obtener el ID único
-        const id = contenedorProducto.querySelector(".info-pro-precio").dataset.id; 
-        const nombre = contenedorProducto.querySelector(".info-pro-nombre").textContent;
-        const precio = parseFloat(contenedorProducto.querySelector(".info-pro-precio").dataset.precio);
-        const imagen = contenedorProducto.querySelector(".info-pro-imagen img").src;
-        const cantidad = parseInt(contenedorProducto.querySelector(".info-pro-valor").textContent);
-
-        agregarAlCarrito(id, nombre, precio, cantidad, imagen);
-
-        // Reiniciar cantidad a 1
-        contenedorProducto.querySelector(".info-pro-valor").textContent = "1";
-    });
-}
-
-const botonIncrementar = document.querySelector(".info-pro-incrementar");
-const botonDecrementar = document.querySelector(".info-pro-decrementar");
-const cantidadSpan = document.querySelector(".info-pro-valor");
-
-if (botonIncrementar && botonDecrementar && cantidadSpan) {
-    botonIncrementar.addEventListener("click", () => {
-        let cantidad = parseInt(cantidadSpan.textContent);
-        cantidadSpan.textContent = cantidad + 1;
-    });
-
-    botonDecrementar.addEventListener("click", () => {
-        let cantidad = parseInt(cantidadSpan.textContent);
-        if (cantidad > 1) {
-            cantidadSpan.textContent = cantidad - 1;
-        }
-    });
-}
-
 // 🚀 Cargar el carrito cuando se abre cualquier página
 cargarCarritoDesdeLocalStorage();
-// 🛑 MODIFICACIÓN CLAVE: Se elimina la llamada fallida al listener
-// document.addEventListener('DOMContentLoaded', agregarListenersCatalogo);

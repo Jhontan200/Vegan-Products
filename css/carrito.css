@@ -6,7 +6,7 @@
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: #E74C3C;
+    background-color: #E74C3C; /* Rojo para alerta, se mantiene */
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -112,25 +112,25 @@
 
 /* 🔽 Decrementador (-) */
 .decrementar-carrito {
-    background-color: #E5E3CE; /* Rojo */
+    background-color: #DCE8E0; /* 🟢 Verde muy claro, reemplaza #E5E3CE */
     color: black;
 }
 
 /* 🔼 Incrementador (+) */
 .incrementar-carrito {
-    background-color: #2C1608; /* Verde */
+    background-color: #17542A; /* 🟢 Verde principal, reemplaza #2C1608 */
     color: white;
 }
 
 /* Efecto al pasar el mouse */
 .decrementar-carrito:hover {
-    background-color: #bcb56e; 
+    background-color: #B0C7B9; /* 🟢 Verde claro de hover, reemplaza #bcb56e */
 }
 .decrementar-carrito:active{
     transform: scale(0.95);
 }
 .incrementar-carrito:hover {
-    background-color: #84451f; /* Verde más oscuro */
+    background-color: #367a4c; /* 🟢 Verde oscuro de hover, reemplaza #84451f */
 }
 .incrementar-carrito:active{
     transform: scale(0.95);
@@ -181,7 +181,7 @@
     padding: 10px;
     border: none;
     border-radius: 6px;
-    background-color: #28a745;
+    background-color: #80CC28; /* 🟢 Verde vibrante (Success), reemplaza #28a745 */
     color: white;
     font-weight: bold;
     text-align: center;
@@ -195,7 +195,7 @@
 }
 
 .vaciar-carrito {
-    background: #E74C3C;
+    background: #E74C3C; /* Rojo para advertencia, se mantiene */
     color: white;
 }
 
@@ -287,23 +287,23 @@
     
     /* 🔽 Decrementador (-) */
     .decrementar-carrito {
-        background-color: #E5E3CE; /* Rojo */
+        background-color: #DCE8E0; /* 🟢 Verde muy claro */
         color: black;
     }
     
     /* 🔼 Incrementador (+) */
     .incrementar-carrito {
-        background-color: #2C1608; /* Verde */
+        background-color: #17542A; /* 🟢 Verde principal */
         color: white;
     }
     
     /* Efecto al pasar el mouse */
     .decrementar-carrito:hover {
-        background-color: #bcb56e; 
+        background-color: #B0C7B9; 
     }
     
     .incrementar-carrito:hover {
-        background-color: #84451f; /* Verde más oscuro */
+        background-color: #367a4c; /* Verde más oscuro de hover */
     }
     .cart-items {
         flex-grow: 1;

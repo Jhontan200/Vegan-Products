@@ -1,6 +1,7 @@
 import { supabase } from './supabaseClient.js';
-import { Producto } from './models/Producto.js'; 
-// import { CarritoItem } from './models/CarritoItem.js'; // Descomenta si la creaste
+import { Producto } from './models/Producto.js';
+// 🛑 CORRECCIÓN CLAVE: Importación de la lógica unificada del carrito.
+import { agregarProductoPorID } from './carrito.js';
 
 /**
  * Función que carga los detalles de un producto y los renderiza en la página.
@@ -23,7 +24,7 @@ async function cargarDetalleProducto() {
             .from('producto')
             .select(`
                 *,
-                categoria (nombre) 
+                categoria (nombre)
             `)
             .eq('id', productoId)
             .single();
@@ -37,18 +38,21 @@ async function cargarDetalleProducto() {
 
         // Mapear los datos de Supabase a nuestra clase Producto
         const producto = new Producto(productoData);
-        
+
         // CORRECCIÓN DE MAYÚSCULAS/MINÚSCULAS
-        const categoriaNombre = productoData.categoria?.nombre || 'Categoría Desconocida'; 
+        const categoriaNombre = productoData.categoria?.nombre || 'Categoría Desconocida';
 
         // 2. Actualizar el Breadcrumb
         actualizarBreadcrumb(categoriaNombre, producto.nombre);
 
         // 3. Renderizar el detalle del producto
         renderizarDetalle(producto, categoriaNombre, container);
-        
-        // 🛑 Ejecutar los listeners del modal y zoom DESPUÉS de renderizar el HTML
+
+        // Ejecutar los listeners del modal y zoom después de renderizar el HTML
         agregarListenersModalZoom();
+
+        // 🛑 CORRECCIÓN CLAVE 2: Inicializar la lógica de cantidad y agregar
+        agregarListenersDetalleProducto(producto);
 
     } catch (error) {
         console.error("Error general al cargar los detalles:", error);
@@ -82,23 +86,25 @@ function renderizarDetalle(producto, categoriaNombre, container) {
     const valorInicial = estaAgotado ? '0' : '1';
     const textoBoton = estaAgotado ? 'AGOTADO' : 'AGREGAR';
     const claseAgotado = estaAgotado ? 'agotado' : '';
-    const stockIndicador = estaAgotado 
+    const stockIndicador = estaAgotado
         ? '<p class="info-pro-stock agotado-stock">Stock: Agotado</p>'
         : `<p class="info-pro-stock">Stock: ${producto.stock} unidades</p>`;
 
+    // 🛑 Nota: Se eliminó la clase ".info-pro-producto" de tu HTML, por lo que el botón
+    // AGREGAR buscará los datos directamente de los elementos inyectados.
     container.innerHTML = `
-        <div class="info-pro-contenedor ${claseAgotado}">
+        <div class="info-pro-contenedor ${claseAgotado}" data-id="${producto.id}">
             <div class="info-pro-imagen">
                 <img src="${producto.imagen_url}" alt="${producto.nombre}" class="zoom-imagen">
                 ${estaAgotado ? '<div class="agotado-tag">AGOTADO</div>' : ''}
             </div>
-            
+
             <div id="modal" class="modal">
                 <span class="cerrar" id="cerrar-modal">&times;</span>
                 <div class="modal-contenido">
                     <img class="modal-imagen" id="modalImagen" src="" alt="Zoom del producto">
                 </div>
-            </div> 
+            </div>
 
             <div class="info-pro-informacion">
                 <h2 class="info-pro-nombre">${producto.nombre}</h2>
@@ -106,9 +112,9 @@ function renderizarDetalle(producto, categoriaNombre, container) {
                 ${stockIndicador}
 
                 <div class="info-pro-acciones">
-                    <button class="info-pro-decrementar" data-id="${producto.id}" ${deshabilitado}>-</button>
-                    <span class="info-pro-valor" data-id="${producto.id}">${valorInicial}</span>
-                    <button class="info-pro-incrementar" data-id="${producto.id}" ${deshabilitado}>+</button>
+                    <button class="info-pro-decrementar" ${deshabilitado}>-</button>
+                    <span class="info-pro-valor">${valorInicial}</span>
+                    <button class="info-pro-incrementar" ${deshabilitado}>+</button>
                 </div>
                 <button class="info-pro-agregar" data-id="${producto.id}" ${deshabilitado}>${textoBoton}</button>
             </div>
@@ -121,7 +127,74 @@ function renderizarDetalle(producto, categoriaNombre, container) {
 }
 
 // =========================================================
-// 🛑 LÓGICA DE LISTENERS DE MODAL Y ZOOM (MOVIDA AQUÍ)
+// 🛑 LÓGICA DE LISTENERS DE CANTIDAD Y AGREGAR (SOLUCIÓN)
+// =========================================================
+
+function agregarListenersDetalleProducto(producto) {
+    const decrementarBtn = document.querySelector('.info-pro-decrementar');
+    const incrementarBtn = document.querySelector('.info-pro-incrementar');
+    const cantidadSpan = document.querySelector('.info-pro-valor');
+    const agregarBtn = document.querySelector('.info-pro-agregar');
+
+    if (!decrementarBtn || !incrementarBtn || !cantidadSpan || !agregarBtn) {
+        return;
+    }
+
+    const estaAgotado = agregarBtn.disabled;
+
+    // --- Lógica de INCREMENTAR y DECREMENTAR local ---
+    if (!estaAgotado) {
+
+        // 1. Decrementar
+        decrementarBtn.addEventListener('click', () => {
+            let cantidad = parseInt(cantidadSpan.textContent);
+            if (cantidad > 1) {
+                cantidad -= 1;
+                cantidadSpan.textContent = cantidad;
+            }
+        });
+
+        // 2. Incrementar
+        incrementarBtn.addEventListener('click', () => {
+            let cantidad = parseInt(cantidadSpan.textContent);
+            cantidad += 1;
+            cantidadSpan.textContent = cantidad;
+        });
+    }
+
+
+    // --- Lógica del Botón AGREGAR ---
+    agregarBtn.addEventListener('click', async () => {
+        if (estaAgotado) {
+            console.warn("Producto agotado. No se puede agregar.");
+            return;
+        }
+
+        // ✅ CORRECCIÓN CLAVE: Convertimos el ID (que viene como número de Supabase) a string.
+        const id = String(producto.id);
+        const nombre = producto.nombre;
+        const precio = producto.precio;
+        const imagen = producto.imagen_url;
+        const cantidad = parseInt(cantidadSpan.textContent);
+
+        if (cantidad > 0) {
+            // 🛑 Llama a la función del carrito, que ahora está exportada y funciona
+            const exito = await agregarProductoPorID(id, cantidad, nombre, precio, imagen);
+
+            if (exito) {
+                console.log(`Agregados ${cantidad} ítems del producto ${id} al carrito.`);
+                // Opcional: Reiniciar la cantidad después de agregar
+                cantidadSpan.textContent = "1";
+            } else {
+                console.error("Error al agregar producto al carrito.");
+            }
+        }
+    });
+}
+
+
+// =========================================================
+// LÓGICA DE LISTENERS DE MODAL Y ZOOM
 // =========================================================
 
 function agregarListenersModalZoom() {
@@ -130,15 +203,13 @@ function agregarListenersModalZoom() {
     const modalImagen = document.getElementById("modalImagen");
     const cerrarModal = document.getElementById("cerrar-modal");
 
-    // Verificar si los elementos existen (deberían existir ahora)
     if (!modal || !modalImagen || !cerrarModal || imagenes.length === 0) {
         console.warn("Faltan elementos HTML para inicializar el modal/zoom.");
         return;
     }
 
     let tiempoSalida;
-    // Uso de media query para detección de pantalla (más robusto)
-    const esPantallaPequena = window.matchMedia("(max-width: 768px)").matches; 
+    const esPantallaPequena = window.matchMedia("(max-width: 768px)").matches;
 
     // Zoom dinámico en imágenes normales (Solo en pantallas grandes)
     if (!esPantallaPequena) {
@@ -187,8 +258,7 @@ function agregarListenersModalZoom() {
 
     // Cerrar clickeando fuera de la imagen
     modal.addEventListener("click", (event) => {
-        // Asegúrate de que solo se cierre si el click es en el fondo del modal, no en la imagen.
-        if (event.target === modal) { 
+        if (event.target === modal) {
             modal.classList.remove("activo");
         }
     });
@@ -204,9 +274,7 @@ function agregarListenersModalZoom() {
     if (!esPantallaPequena) {
         modalImagen.addEventListener("mousemove", (event) => {
             const { left, top, width, height } = modalImagen.getBoundingClientRect();
-            
-            // Si la imagen dentro del modal tiene `object-fit: cover` (como en tu CSS),
-            // el cálculo de origen es más directo:
+
             const x = ((event.clientX - left) / width) * 100;
             const y = ((event.clientY - top) / height) * 100;
 
