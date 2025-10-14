@@ -1,0 +1,63 @@
+.search-bar-container {
+    position: relative;
+    width: 45%;
+}
+
+.search-modal {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    overflow-y: auto;
+    border-radius: 0 0 5px 5px;
+    padding: 5px 0;
+}
+
+.search-modal ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-modal li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-modal li:hover {
+    background-color: #60411c;
+    color: white;
+}
+
+.search-modal {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.search-modal:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.search-modal li {
+    animation: fadeIn 0.3s ease-out;
+}

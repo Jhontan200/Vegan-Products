@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.contenido {
+    width: 100%;
+    height: 100%;
+    padding: 1rem 0.5rem;
+    background: white !important;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.producto-link {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+/* Indicador de ubicación (Breadcrumb) */
+.breadcrumb {
+    width: 100%;
+    text-align: left;
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 10px !important;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .activo {
+    color: #17542A;
+    font-weight: bold;
+}
+
+/* Título de la categoría */
+.titulo-categoria {
+    margin-top: 0;
+    font-size: 45px;
+    font-weight: bold;
+    text-align: center !important;
+    margin-bottom: 1rem;
+    color: #17542A;
+}
+
+/* Contenedor principal */
+.contenedor {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    gap: 5px !important;
+    align-items: flex-start;
+    overflow: hidden;
+}
+/* Catálogo de productos */
+.catalogo {
+    flex: 1;
+    /* Se expande automáticamente en el espacio restante */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.18rem;
+    min-height: 650px;
+    padding: 0rem 1rem !important;
+    overflow-y: auto;
+    /* Permite desplazamiento si hay más productos */
+}
+
+.producto {
+    flex: 1 0 225px;
+    max-width: 225px;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Tarjetas de producto */
+.producto {
+    background-color: white;
+    border: 1px solid #000000;
+    width: 225px;
+    max-height: 500px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+    flex-shrink: 0 !important;
+}
+
+.producto:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.producto img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+}
+
+.producto h3 {
+    font-size: 22px !important;
+    font-weight: normal !important;
+    margin: 5px 0; /* Asegura un margen pequeño */
+    
+    /* Lógica de corte de texto */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a 2 líneas */
+    -webkit-box-orient: vertical; 
+    line-clamp: 2; /* Estándar */
+
+    /* CLAVE DE CORRECCIÓN: Establecer una altura fija que quepa EXACTAMENTE 2 líneas */
+    /* 22px (font-size) * ~1.2 (line-height por defecto) * 2 líneas = ~53px */
+    height: 55px; /* Aumentar la altura para asegurar que quepan 2 líneas */
+    text-overflow: ellipsis; 
+}
+
+.producto p {
+    font-size: 25px !important;
+    margin-top: auto;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cantidad button,
+.cantidad input {
+    border: none;
+    padding: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+}
+
+.cantidad .incrementar {
+    background-color: #17542A;
+    color: white;
+}
+.cantidad .incrementar:hover{
+    background-color: #367a4c;
+}
+.cantidad .incrementar:active{
+   transform: scale(0.95);
+}
+.cantidad .decrementar {
+    background-color: #E5E3CE;
+    color: black;
+}
+.cantidad .decrementar:hover {
+    background-color: #c4c3bb;
+}
+.cantidad .decrementar:active{
+    transform: scale(0.95);
+ }
+.agregar {
+    background-color: #80CC28;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.agregar:hover{
+    background-color: rgb(79, 134, 15);;
+}
+.agregar:active {
+    transform: scale(0.95); /* Hace que el botón se vea hundido */
+}
+
+/* Filtro responsive para móviles */
+@media (min-width: 200px) and (max-width: 800px) {
+    .contenido {
+        align-items: flex-start; /* Para que el breadcrumb y título empiecen a la izquierda */
+    }
+    .contenedor {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .catalogo {
+        justify-content: center;/* Ajuste de padding en móvil */
+    }
+
+    .titulo-categoria {
+        margin-top: 0;
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center !important; /* ¡Centrado en móvil también! */
+        margin-bottom: 10px;
+        font-family: 'Kanit', sans-serif; /* Usamos la fuente importada Kanit */
+        color: #17542A; /* ¡Verde principal! */
+        width: 100%;
+    }
+
+    .breadcrumb {
+        width: 100%;
+        text-align: left;
+        font-size: 15px;
+        color: #000000;
+        padding-left: 10px; /* Pequeño ajuste para el borde */
+        margin-bottom: 10px !important;
+    }
+
+    .breadcrumb .activo {
+        color: #17542A; /* ¡Verde vibrante! */
+        font-weight: bold;
+        font-size: 15px !important;
+    }
+
+}
+
+@media (min-width: 860px) and (max-width: 1900px) {
+
+    /* ¡ELIMINAMOS LOS ESTILOS DE .filtros YA QUE NO HAY! */
+
+    .contenedor {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        gap: 10px;
+        align-items: flex-start;
+        overflow: hidden;
+    }
+
+}
+
+/* Asegurar que la tarjeta agotada sea relativa para posicionar el tag */
+.producto {
+    position: relative; 
+}
+
+/* Estilo para el producto agotado */
+.producto.agotado {
+    opacity: 0.6; /* Atenúa un poco el producto */
+    /* pointer-events: none; /* Deshabilita clics en toda la tarjeta si es necesario */
+}
+
+/* Estilo para el tag de AGOTADO */
+.agotado-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e74c3c; /* Rojo */
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 10; /* Asegura que esté por encima de la imagen */
+    transform: rotate(5deg);
+}
