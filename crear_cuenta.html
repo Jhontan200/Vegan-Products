@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vegan Products/Términos y Condiciones</title>
+    <title>Vegan Products - Crear Cuenta</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/terminos.css">
+    <link rel="stylesheet" href="css/crear_cuenta.css">
     <link rel="stylesheet" href="css/carrito.css">
     <link rel="stylesheet" href="css/busqueda.css">
 </head>
@@ -94,128 +94,62 @@
                 <li class="menu1"><a href="productos.html?categoria=Bebidas">Bebidas</a></li>
             </ul>
         </nav>
-        <section class="terms">
-            <h1>Términos y Condiciones de Vegan Products</h1>
-
-            <div class="terms-item">
-                <h2>Introducción</h2>
-                <p>
-                    Bienvenido a Vegan Products. Al acceder y realizar compras en nuestra tienda en línea, aceptas
-                    cumplir con
-                    los siguientes términos y condiciones. Estos términos rigen la relación entre Vegan Products y el
-                    cliente.
-                </p>
+        <section class="container">
+            <div class="left">
+                <div class="carousel">
+                    <div class="slide" style="background-image: url('imagenes/imagen04.webp');"></div>
+                    <div class="slide" style="background-image: url('imagenes/imagen05.webp');"></div>
+                    <div class="slide" style="background-image: url('imagenes/imagen06.webp');"></div>
+                </div>
+                <div class="overlay">
+                    <h2 class="titulo-cuenta">¡Únete a la comunidad Vegan!</h2>
+                    <p class="texto-cuenta">Regístrate en Vegan Products para descubrir alimentos deliciosos y éticos.
+                        Crea tu cuenta para acceder a compras rápidas, ofertas exclusivas y productos 100% vegetales.
+                    </p>
+                </div>
             </div>
 
-            <div class="terms-item">
-                <h2>Registro de Cuenta</h2>
-                <p>
-                    Al crear una cuenta en Vegan Products, eres responsable de mantener la confidencialidad de tus datos
-                    de
-                    inicio de sesión. Teniendo esto en cuenta, el acceso a los servicios del sitio web no requiere
-                    registro. La inscripción de los usuarios es de carácter voluntario y se puede llevar a cabo al
-                    completar el formulario disponible en el sitio web.
-                </p>
-            </div>
+            <div class="right">
+                <h2 class="title">Crear Cuenta</h2>
+                <form class="register-form">
+                    <label for="nombre" class="label">Primer Nombre:</label>
+                    <input type="text" id="nombre" class="input" required>
 
-            <div class="terms-item">
-                <h2>Pedidos y Compras</h2>
-                <ul>
-                    <li>Los precios de nuestros productos están sujetos a cambios sin previo aviso.</li>
-                    <li>Los pedidos se realizan a través de nuestro sitio web y están sujetos a disponibilidad.</li>
-                    <li>Los gastos de envío se detallarán en el proceso de compra.</li>
-                    <li>Los pedidos son confirmados por correo electrónico.</li>
-                </ul>
-            </div>
+                    <label for="segundo-nombre" class="label">Segundo Nombre (Opcional):</label>
+                    <input type="text" id="segundo-nombre" class="input">
 
-            <div class="terms-item">
-                <h2>Envío y Entrega</h2>
-                <p>
-                    Ofrecemos entrega a domicilio o recojo en almacén con plazos de entrega estimados. Los retrasos
-                    pueden ocurrir, y no somos responsables de los mismos. Consulta nuestras políticas específicas en la
-                    sección de Envío en nuestro sitio web.
-                </p>
-            </div>
+                    <label for="apellido-paterno" class="label">Apellido Paterno:</label>
+                    <input type="text" id="apellido-paterno" class="input" required>
 
-            <div class="terms-item">
-                <h2>Cambios y devoluciones</h2>
-                <p>
-                    Aceptamos devoluciones por falla de fábrica dentro de los 7 días calendario a la recepción del
-                    producto, siempre que este esté en su estado original y con el embalaje intacto. Puedes consultar
-                    nuestras políticas en la sección de cambios y devoluciones en nuestra web.
-                </p>
-            </div>
+                    <label for="apellido-materno" class="label">Apellido Materno:</label>
+                    <input type="text" id="apellido-materno" class="input" required>
 
-            <div class="terms-item">
-                <h2>Cupones y promociones</h2>
-                <p>
-                    En el caso de promociones que impliquen cupones de descuento, estos se aplicarán exclusivamente al
-                    valor total de los productos seleccionados. Se permite el uso de un solo cupón de descuento por
-                    compra, y no es posible acumular múltiples cupones.
-                </p>
-            </div>
+                    <label for="ci" class="label">C.I. (Carnet de Identidad):</label>
+                    <input type="text" id="ci" class="input" maxlength="7" required>
 
-            <div class="terms-item">
-                <h2>Política de precios</h2>
-                <p>
-                    Si se identifica un error evidente en la fijación del precio que se muestra en la descripción del
-                    producto, el precio indicado en el correo de notificación que enviamos al detectar el error
-                    prevalecerá para ese producto.
-                </p>
-            </div>
+                    <label for="celular" class="label">Celular:</label>
+                    <input type="tel" id="celular" class="input" maxlength="8" required>
 
-            <div class="terms-item">
-                <h2>Privacidad y Protección de Datos</h2>
-                <p>
-                    Protegemos tus datos y no compartimos información con terceros sin tu consentimiento.
-                </p>
-            </div>
+                    <label for="email" class="label">Correo Electrónico:</label>
+                    <input type="email" id="email" class="input" required>
 
-            <div class="terms-item">
-                <h2>Garantía y Calidad de los Productos</h2>
-                <p>
-                    Los productos adquiridos en Vegan Products pueden estar sujetos a garantía, que consta de 7 días
-                    calendario
-                    luego de recibir el producto. Para presentar una reclamación de garantía, comunícate con nuestro
-                    equipo de atención al cliente.
-                </p>
-            </div>
+                    <label for="password" class="label">Contraseña:</label>
+                    <div style="position: relative;">
+                        <input type="password" id="password" class="input" required>
+                        <span onclick="togglePassword()"
+                            style="position: absolute; right: 10px; top: 40%; transform: translateY(-50%); cursor: pointer; height: 24px; width: 24px; display: flex; align-items: center; justify-content: center;">
+                            <img id="eye-open" src="imagenes/ojo_abierto.png" alt="ojo abierto"
+                                style="max-width: 100%; max-height: 100%; display: block;">
+                            <img id="eye-closed" src="imagenes/ojo_cerrado.png" alt="ojo cerrado"
+                                style="max-width: 100%; max-height: 100%; display: none;">
+                        </span>
+                    </div>
 
-            <div class="terms-item">
-                <h2>Responsabilidad y Limitación</h2>
-                <p>
-                    No nos hacemos responsables de daños o pérdidas consecuentes o incidentales relacionados con el uso
-                    de nuestros productos. En caso de disputas, el cliente y Vegan Products se esforzarán por
-                    resolverlas
-                    amigablemente.
-                </p>
-            </div>
-
-            <div class="terms-item">
-                <h2>Cambios en los Términos y Condiciones</h2>
-                <p>
-                    Los términos y condiciones pueden cambiar. Notificaremos a los clientes sobre modificaciones
-                    importantes.
-                </p>
-            </div>
-
-            <div class="terms-item">
-                <h2>Contacto</h2>
-                <p>
-                    Puedes comunicarte con nosotros en <a
-                        href="mailto:veganproducts@gmail.com">veganproducts@gmail.com</a> o al
-                    54488474.
-                </p>
-            </div>
-
-            <div class="terms-item">
-                <h2>Fecha de Entrada en Vigor</h2>
-                <p>
-                    Estos términos y condiciones entran en vigor a partir del 26/10/2023.
-                </p>
+                    <button type="submit" class="register-btn">Crear Cuenta</button>
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                </form>
             </div>
         </section>
-
         <!-- Footer -->
         <footer class="parent">
             <div class="div1">
@@ -283,13 +217,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script type="module" src="js/supabaseClient.js"></script>
     <script type="module" src="js/productos.js"></script>
-    <script type="module" src="js/cerrar_sesion.js"></script>
+    <script type="module" src="js/crear_cuenta.js"></script>
     <script type="module" src="js/productManager.js"></script>
     <script type="module" src="js/buscador.js"></script>
     <script src="js/main.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/carrusel.js"></script>
     <script src="js/carrito.js"></script>
+    <script src="js/cerrar_sesion.js"></script>
 </body>
 
 </html>
