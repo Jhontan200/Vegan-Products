@@ -265,8 +265,6 @@
     /* Oculta los elementos que se salen del ancho */
     position: relative;
     box-shadow: 10px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    /* El color del fondo para las máscaras */
 }
 
 /* Degradado de Desvanecimiento (Shadow Mask) en los bordes) */
