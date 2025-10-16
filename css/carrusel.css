@@ -257,8 +257,6 @@
 /* Contenedor Principal del Carrusel Infinito */
 .slider {
     width: 100%;
-    /* Ancho visible en el viewport */
-    max-width: 1400px;
     margin: auto;
     height: auto;
     overflow: hidden;
