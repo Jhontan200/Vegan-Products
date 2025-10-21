@@ -529,7 +529,6 @@ if (btnFinalizarCompra) {
             // --- 1. Guardar la Dirección ---
             const direccionData = {
                 id_usuario: user.id,
-                id_localidad: parseInt(selectLocalidad.value),
                 id_zona: selectZona.value ? parseInt(selectZona.value) : null,
                 calle_avenida: document.getElementById('calle_avenida').value,
                 numero_casa_edificio: document.getElementById('numero_casa_edificio').value || null,
