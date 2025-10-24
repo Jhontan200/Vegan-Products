@@ -1,24 +1,16 @@
-// js/resumen.js
-
 import { supabase } from './supabaseClient.js';
 import { GeoManager } from './geoManager.js';
 import { DirectionManager } from './DirectionManager.js';
 import { OrderManager } from './OrderManager.js';
 import { AuthManager } from './authManager.js';
 
-// ------------------------------------------------------------------
-// 1. INICIALIZACIÓN DE MANAGERS Y ELEMENTOS
-// ------------------------------------------------------------------
-
 const authManager = new AuthManager();
 const geoManager = new GeoManager();
 const directionManager = new DirectionManager();
 const orderManager = new OrderManager();
 
-// Estado Local del Carrito
 let carrito = [];
 
-// Elementos del DOM
 const resumenContenedor = document.getElementById("listaCarrito");
 const totalElemento = document.getElementById("totalFinal");
 
@@ -27,21 +19,16 @@ const selectMunicipio = document.getElementById('id_municipio');
 const selectLocalidad = document.getElementById('id_localidad');
 const selectZona = document.getElementById('id_zona');
 
-const inputPrimerNombre = document.getElementById('nombre'); // Nombre Completo (input único)
+const inputPrimerNombre = document.getElementById('nombre');
 const inputCI = document.getElementById('ci');
 const inputCelular = document.getElementById('celular');
 const inputEmail = document.getElementById('email');
 
 const btnFinalizarCompra = document.querySelector('.pago-finalizar');
 
-// Variables de estado
 let selectedPaymentMethod = '';
 let usuarioActual = null;
 
-
-// ------------------------------------------------------------------
-// 2. LÓGICA DEL CARRITO
-// ------------------------------------------------------------------
 
 function cargarCarrito() {
     carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -56,7 +43,6 @@ function calcularTotal() {
     return carrito.reduce((acc, prod) => acc + prod.precio * prod.cantidad, 0);
 }
 
-// Funciones globales (necesarias para los onclick del HTML)
 window.obtenerItemsDelCarrito = () => carrito;
 window.calcularTotal = () => calcularTotal();
 window.vaciarCarrito = () => {
@@ -118,7 +104,6 @@ function mostrarResumenCarrito() {
     actualizarTotalUI();
 }
 
-// Listener para la manipulación del carrito
 if (resumenContenedor) {
     resumenContenedor.addEventListener("click", (e) => {
         const index = e.target.dataset.index;
@@ -138,10 +123,6 @@ if (resumenContenedor) {
         mostrarResumenCarrito();
     });
 }
-
-// ------------------------------------------------------------------
-// 3. LÓGICA DE GEOLOCALIZACIÓN
-// ------------------------------------------------------------------
 
 function fillSelect(selectElement, items, idKey, nameKey, defaultText) {
     if (!selectElement) return;
@@ -173,7 +154,6 @@ async function loadDepartamentos() {
     }
 }
 
-// Listeners Geográficos
 if (selectDepartamento) {
     selectDepartamento.addEventListener('change', async (e) => {
         const idDepartamento = e.target.value;
@@ -224,10 +204,6 @@ if (selectLocalidad) {
 }
 
 
-// ------------------------------------------------------------------
-// 4. LÓGICA DE MODALES Y MÉTODO DE PAGO
-// ------------------------------------------------------------------
-
 window.mostrarModal = (id) => {
     const modal = document.getElementById(id);
     if (modal) modal.style.display = 'flex';
@@ -246,7 +222,6 @@ window.generarQR = () => {
     if (window.QRCode && canvas) {
         canvas.innerHTML = '';
         try {
-            // eslint-disable-next-line no-undef
             QRCode.toCanvas(canvas, dataQR, function (error) {
                 if (error) {
                     console.error('Error al renderizar QR con toCanvas:', error);
@@ -268,7 +243,6 @@ window.generarQR = () => {
 
 
 window.seleccionarMetodo = (metodo) => {
-    // 1. Limpia todas las selecciones
     document.querySelectorAll('.metodo-seleccionable').forEach(img => img.classList.remove('seleccionado'));
 
     const metodoInput = document.getElementById('metodo-seleccionado');
@@ -280,7 +254,7 @@ window.seleccionarMetodo = (metodo) => {
         mostrarModal('modal-transferencia');
         generarQR();
         if (metodoInput) metodoInput.value = '';
-    } else { // Efectivo
+    } else {
         selectedPaymentMethod = 'Efectivo';
         if (metodoInput) metodoInput.value = 'Efectivo';
         const opcionElement = document.getElementById(`opcion-efectivo`);
@@ -318,10 +292,6 @@ window.confirmarTransferencia = () => {
 
     cerrarModal('modal-transferencia');
 }
-
-// ------------------------------------------------------------------
-// 5. VALIDACIÓN Y PROCESAMIENTO FINAL
-// ------------------------------------------------------------------
 
 function validarFormularioCompleto() {
     const datosForm = document.getElementById('pago-form-datos');
@@ -361,7 +331,6 @@ function validarFormularioCompleto() {
 }
 
 async function generarFacturaPDF(orderId) {
-    // eslint-disable-next-line no-undef
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({
         orientation: "portrait",
@@ -376,7 +345,6 @@ async function generarFacturaPDF(orderId) {
     const margin = 10;
     const lineHeight = 7;
 
-    // Header
     if (logo.complete) {
         doc.addImage(logo, "PNG", margin, y, 40, 15);
     }
@@ -384,12 +352,10 @@ async function generarFacturaPDF(orderId) {
     doc.text("FACTURA DE COMPRA", 200 - margin, y + 7, { align: "right" });
     y += 20;
 
-    // Metadatos de la Factura
     doc.setFontSize(10);
     doc.text(`N° de Pedido/Factura: ${orderId || Math.floor(100000 + Math.random() * 900000)}`, margin, y); y += lineHeight;
     doc.text(`Fecha: ${new Date().toLocaleDateString()} | Hora: ${new Date().toLocaleTimeString()}`, margin, y); y += lineHeight * 2;
 
-    // Detalles del Cliente
     doc.setFontSize(12);
     doc.text("DATOS DEL CLIENTE", margin, y); y += lineHeight;
     doc.setFontSize(10);
@@ -397,7 +363,6 @@ async function generarFacturaPDF(orderId) {
     doc.text(`Contacto: ${inputCelular.value.trim()} | Email: ${inputEmail.value.trim()}`, margin, y); y += lineHeight;
     doc.text(`Método de pago: ${selectedPaymentMethod}`, margin, y); y += lineHeight * 2;
 
-    // Detalles de la Dirección
     const departamentoNombre = selectDepartamento.options[selectDepartamento.selectedIndex].text;
     const municipioNombre = selectMunicipio.options[selectMunicipio.selectedIndex].text;
     const localidadNombre = selectLocalidad.options[selectLocalidad.selectedIndex].text;
@@ -410,7 +375,6 @@ async function generarFacturaPDF(orderId) {
     doc.text(`Referencia: ${document.getElementById('referencia_adicional').value.substring(0, 100)}...`, margin, y); y += lineHeight * 2;
 
 
-    // Tabla de Productos 
     const tableData = carrito.map(producto => [
         producto.nombre,
         producto.cantidad,
@@ -424,16 +388,14 @@ async function generarFacturaPDF(orderId) {
             head: [['Producto', 'Cant.', 'P. Unit.', 'Subtotal']],
             body: tableData,
             theme: 'striped',
-            // 🛑 MODIFICACIONES DE COLOR PARA VERDE OSCURO 🛑
             headStyles: {
-                fillColor: '#006400', // Verde Oscuro
+                fillColor: '#006400',
                 textColor: '#FFFFFF',
                 fontStyle: 'bold'
             },
             alternateRowStyles: {
-                fillColor: '#E8F5E9' // Verde claro
+                fillColor: '#E8F5E9'
             },
-            // 🛑 FIN MODIFICACIONES DE COLOR 🛑
             styles: { fontSize: 10, cellPadding: 2 },
             columnStyles: { 3: { halign: 'right' } },
         });
@@ -447,23 +409,18 @@ async function generarFacturaPDF(orderId) {
         y += 5;
     }
 
-    // Total Final
     doc.setFontSize(14);
     doc.text(`TOTAL FINAL: Bs. ${calcularTotal().toLocaleString('es-BO', { minimumFractionDigits: 2 })}`, 200 - margin, y, { align: "right" });
 
     doc.save(`Factura_Pedido_${orderId}.pdf`);
 }
 
-/**
- * Carga los datos del usuario autenticado y BLOQUEA los campos.
- */
 async function loadUserData() {
     const perfil = await authManager.getPerfilActual();
 
     if (perfil) {
         usuarioActual = perfil;
 
-        // 1. CONSTRUIR NOMBRE COMPLETO: Garantizando el espacio correcto.
         const partesNombre = [
             perfil.primer_nombre,
             perfil.segundo_nombre,
@@ -471,27 +428,25 @@ async function loadUserData() {
             perfil.apellido_materno
         ];
 
-        // Filtra nulos/vacíos y unir con un solo espacio.
         const nombreCompleto = partesNombre
             .filter(parte => parte && parte.trim().length > 0)
             .join(' ');
 
-        // 2. CARGAR Y BLOQUEAR CAMPOS
         if (inputPrimerNombre) {
             inputPrimerNombre.value = nombreCompleto;
-            inputPrimerNombre.disabled = true; // 🔒 BLOQUEADO
+            inputPrimerNombre.disabled = true;
         }
         if (inputEmail) {
             inputEmail.value = perfil.correo_electronico || '';
-            inputEmail.disabled = true; // 🔒 BLOQUEADO
+            inputEmail.disabled = true;
         }
         if (inputCI) {
             inputCI.value = perfil.ci || '';
-            inputCI.disabled = true; // 🔒 BLOQUEADO
+            inputCI.disabled = true;
         }
         if (inputCelular) {
             inputCelular.value = perfil.celular || '';
-            inputCelular.disabled = true; // 🔒 BLOQUEADO 
+            inputCelular.disabled = true;
         }
 
     } else {
@@ -513,7 +468,6 @@ if (btnFinalizarCompra) {
             if (!usuarioActual) return;
         }
 
-        // 🎯 Obtener el ID de usuario más fresco
         const { data: userData, error: userError } = await supabase.auth.getUser();
 
         if (userError || !userData?.user) {
@@ -526,7 +480,6 @@ if (btnFinalizarCompra) {
         const itemsDelCarrito = obtenerItemsDelCarrito();
 
         try {
-            // --- 1. Guardar la Dirección ---
             const direccionData = {
                 id_usuario: user.id,
                 id_zona: selectZona.value ? parseInt(selectZona.value) : null,
@@ -539,7 +492,6 @@ if (btnFinalizarCompra) {
             const idDireccion = newDirection[0].id_direccion;
 
 
-            // --- 2. Crear la Orden Principal y Detalles ---
             const orderData = {
                 id_usuario: user.id,
                 id_direccion: idDireccion,
@@ -558,11 +510,9 @@ if (btnFinalizarCompra) {
 
             const result = await orderManager.createOrder(orderData, itemsParaOrden);
 
-            // --- 5. Lógica de UI Post-Compra ---
             if (result && result.orderId) {
                 await generarFacturaPDF(result.orderId);
 
-                // ✅ Mensaje de éxito
                 alert(`🎉 ¡Compra finalizada! La factura se ha descargado.`);
 
                 window.vaciarCarrito();
@@ -573,22 +523,15 @@ if (btnFinalizarCompra) {
         } catch (e) {
             console.error("Error al procesar la compra:", e);
 
-            // 🛑 NUEVA LÓGICA DE MANEJO DE ERROR DE STOCK PARA MEJOR UX 🛑
             if (e.message && e.message.includes('Stock insuficiente')) {
                 alert("❌ Compra Cancelada. Uno o más productos en tu carrito exceden el stock disponible. Por favor, revisa las cantidades e intenta de nuevo.");
             } else {
-                // Mensaje para otros errores (conexión, RLS, etc.)
                 alert(`❌ Fallo al procesar tu compra. Error: ${e.message}`);
             }
-            // 🛑 FIN NUEVA LÓGICA 🛑
         }
     });
 }
 
-
-// ------------------------------------------------------------------
-// 6. INICIO AL CARGAR EL DOCUMENTO
-// ------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
     loadUserData();
@@ -597,9 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const storedMethod = document.getElementById('metodo-seleccionado')?.value;
     if (storedMethod) {
-        // Al inicio, restauramos el estado visual
         seleccionarMetodo(storedMethod);
-        // Si no es efectivo, cerramos el modal que seleccionarMetodo abrió temporalmente.
         if (storedMethod !== 'Efectivo') {
             cerrarModal(`modal-${storedMethod.toLowerCase()}`);
         }

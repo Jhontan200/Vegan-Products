@@ -1,4 +1,3 @@
-// js/GeoManager.js
 import { supabase } from './supabaseClient.js';
 
 export class GeoManager {
@@ -6,9 +5,6 @@ export class GeoManager {
         this.supabase = supabase;
     }
 
-    /**
-     * Obtiene la lista de departamentos.
-     */
     async getDepartamentos() {
         const { data, error } = await this.supabase
             .from('departamento')
@@ -19,9 +15,6 @@ export class GeoManager {
         return data;
     }
 
-    /**
-     * Obtiene los municipios dado un id_departamento.
-     */
     async getMunicipiosByDepartamento(idDepartamento) {
         const { data, error } = await this.supabase
             .from('municipio')
@@ -33,9 +26,6 @@ export class GeoManager {
         return data;
     }
 
-    /**
-     * Obtiene las localidades dado un id_municipio.
-     */
     async getLocalidadesByMunicipio(idMunicipio) {
         const { data, error } = await this.supabase
             .from('localidad')
@@ -47,9 +37,6 @@ export class GeoManager {
         return data;
     }
 
-    /**
-     * Obtiene las zonas dado un id_localidad (opcional).
-     */
     async getZonasByLocalidad(idLocalidad) {
         const { data, error } = await this.supabase
             .from('zona')

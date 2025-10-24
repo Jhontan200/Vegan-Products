@@ -1,5 +1,3 @@
-// js/productManager.js
-
 import { supabase } from './supabaseClient.js';
 
 export class ProductManager {
@@ -8,9 +6,8 @@ export class ProductManager {
             return [];
         }
 
-        // 🛑 CORRECCIÓN CLAVE: Cambiar 'productos' a 'producto' (singular)
         const { data, error } = await supabase
-            .from('producto') // AHORA ES 'producto'
+            .from('producto')
             .select('nombre, imagen_url, id')
             .ilike('nombre', `%${searchTerm}%`)
             .limit(8);

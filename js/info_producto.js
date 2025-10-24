@@ -2,12 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const imagenes = document.querySelectorAll(".zoom-imagen");
     const modal = document.getElementById("modal");
     const modalImagen = document.getElementById("modalImagen");
-    const cerrarModal = document.getElementById("cerrar-modal"); // corregido aquí el ID
+    const cerrarModal = document.getElementById("cerrar-modal");
 
     let tiempoSalida;
     const esPantallaPequena = window.innerWidth < 768;
 
-    // Zoom dinámico en imágenes normales
     if (!esPantallaPequena) {
         imagenes.forEach(img => {
             img.addEventListener("mousemove", (event) => {
@@ -46,25 +45,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Cerrar modal
     cerrarModal.addEventListener("click", () => {
         modal.classList.remove("activo");
     });
 
-    // También para cerrar clickeando fuera de la imagen
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             modal.classList.remove("activo");
         }
     });
 
-    // Cerrar con Escape
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
             modal.classList.remove("activo");
         }
     });
-    // Zoom dinámico en imagen dentro del modal
+
     if (!esPantallaPequena) {
         modalImagen.addEventListener("mousemove", (event) => {
             const { left, top, width, height } = modalImagen.getBoundingClientRect();

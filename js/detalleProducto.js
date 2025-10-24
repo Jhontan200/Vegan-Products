@@ -1,11 +1,7 @@
 import { supabase } from './supabaseClient.js';
 import { Producto } from './models/Producto.js';
-// 🛑 CORRECCIÓN CLAVE: Importación de la lógica unificada del carrito.
 import { agregarProductoPorID } from './carrito.js';
 
-/**
- * Función que carga los detalles de un producto y los renderiza en la página.
- */
 async function cargarDetalleProducto() {
     const urlParams = new URLSearchParams(window.location.search);
     const productoId = urlParams.get('id');
@@ -19,7 +15,6 @@ async function cargarDetalleProducto() {
     }
 
     try {
-        // 1. Obtener el producto y su categoría (mediante un join o select completo)
         let { data: productoData, error: prodError } = await supabase
             .from('producto')
             .select(`
@@ -36,22 +31,16 @@ async function cargarDetalleProducto() {
             return;
         }
 
-        // Mapear los datos de Supabase a nuestra clase Producto
         const producto = new Producto(productoData);
 
-        // CORRECCIÓN DE MAYÚSCULAS/MINÚSCULAS
         const categoriaNombre = productoData.categoria?.nombre || 'Categoría Desconocida';
 
-        // 2. Actualizar el Breadcrumb
         actualizarBreadcrumb(categoriaNombre, producto.nombre);
 
-        // 3. Renderizar el detalle del producto
         renderizarDetalle(producto, categoriaNombre, container);
 
-        // Ejecutar los listeners del modal y zoom después de renderizar el HTML
         agregarListenersModalZoom();
 
-        // 🛑 CORRECCIÓN CLAVE 2: Inicializar la lógica de cantidad y agregar
         agregarListenersDetalleProducto(producto);
 
     } catch (error) {
@@ -59,10 +48,6 @@ async function cargarDetalleProducto() {
         container.innerHTML = '<h2>Ocurrió un error inesperado al cargar el producto.</h2>';
     }
 }
-
-// =========================================================
-// FUNCIONES DE SOPORTE
-// =========================================================
 
 function actualizarBreadcrumb(categoriaNombre, productoNombre) {
     const categoriaLink = document.getElementById('breadcrumb-categoria-link');
@@ -90,8 +75,6 @@ function renderizarDetalle(producto, categoriaNombre, container) {
         ? '<p class="info-pro-stock agotado-stock">Stock: Agotado</p>'
         : `<p class="info-pro-stock">Stock: ${producto.stock} unidades</p>`;
 
-    // 🛑 Nota: Se eliminó la clase ".info-pro-producto" de tu HTML, por lo que el botón
-    // AGREGAR buscará los datos directamente de los elementos inyectados.
     container.innerHTML = `
         <div class="info-pro-contenedor ${claseAgotado}" data-id="${producto.id}">
             <div class="info-pro-imagen">
@@ -126,10 +109,6 @@ function renderizarDetalle(producto, categoriaNombre, container) {
     `;
 }
 
-// =========================================================
-// 🛑 LÓGICA DE LISTENERS DE CANTIDAD Y AGREGAR (SOLUCIÓN)
-// =========================================================
-
 function agregarListenersDetalleProducto(producto) {
     const decrementarBtn = document.querySelector('.info-pro-decrementar');
     const incrementarBtn = document.querySelector('.info-pro-incrementar');
@@ -142,10 +121,8 @@ function agregarListenersDetalleProducto(producto) {
 
     const estaAgotado = agregarBtn.disabled;
 
-    // --- Lógica de INCREMENTAR y DECREMENTAR local ---
     if (!estaAgotado) {
 
-        // 1. Decrementar
         decrementarBtn.addEventListener('click', () => {
             let cantidad = parseInt(cantidadSpan.textContent);
             if (cantidad > 1) {
@@ -154,7 +131,6 @@ function agregarListenersDetalleProducto(producto) {
             }
         });
 
-        // 2. Incrementar
         incrementarBtn.addEventListener('click', () => {
             let cantidad = parseInt(cantidadSpan.textContent);
             cantidad += 1;
@@ -162,15 +138,12 @@ function agregarListenersDetalleProducto(producto) {
         });
     }
 
-
-    // --- Lógica del Botón AGREGAR ---
     agregarBtn.addEventListener('click', async () => {
         if (estaAgotado) {
             console.warn("Producto agotado. No se puede agregar.");
             return;
         }
 
-        // ✅ CORRECCIÓN CLAVE: Convertimos el ID (que viene como número de Supabase) a string.
         const id = String(producto.id);
         const nombre = producto.nombre;
         const precio = producto.precio;
@@ -178,12 +151,10 @@ function agregarListenersDetalleProducto(producto) {
         const cantidad = parseInt(cantidadSpan.textContent);
 
         if (cantidad > 0) {
-            // 🛑 Llama a la función del carrito, que ahora está exportada y funciona
             const exito = await agregarProductoPorID(id, cantidad, nombre, precio, imagen);
 
             if (exito) {
                 console.log(`Agregados ${cantidad} ítems del producto ${id} al carrito.`);
-                // Opcional: Reiniciar la cantidad después de agregar
                 cantidadSpan.textContent = "1";
             } else {
                 console.error("Error al agregar producto al carrito.");
@@ -191,11 +162,6 @@ function agregarListenersDetalleProducto(producto) {
         }
     });
 }
-
-
-// =========================================================
-// LÓGICA DE LISTENERS DE MODAL Y ZOOM
-// =========================================================
 
 function agregarListenersModalZoom() {
     const imagenes = document.querySelectorAll(".zoom-imagen");
@@ -211,7 +177,6 @@ function agregarListenersModalZoom() {
     let tiempoSalida;
     const esPantallaPequena = window.matchMedia("(max-width: 768px)").matches;
 
-    // Zoom dinámico en imágenes normales (Solo en pantallas grandes)
     if (!esPantallaPequena) {
         imagenes.forEach(img => {
             img.addEventListener("mousemove", (event) => {
@@ -242,7 +207,6 @@ function agregarListenersModalZoom() {
         });
     }
 
-    // Abrir modal (funciona en todas las pantallas)
     imagenes.forEach(img => {
         img.addEventListener("click", () => {
             modal.classList.add("activo");
@@ -251,26 +215,22 @@ function agregarListenersModalZoom() {
         });
     });
 
-    // Cerrar modal
     cerrarModal.addEventListener("click", () => {
         modal.classList.remove("activo");
     });
 
-    // Cerrar clickeando fuera de la imagen
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             modal.classList.remove("activo");
         }
     });
 
-    // Cerrar con Escape
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && modal.classList.contains("activo")) {
             modal.classList.remove("activo");
         }
     });
 
-    // Zoom dinámico en imagen dentro del modal (Solo en pantallas grandes)
     if (!esPantallaPequena) {
         modalImagen.addEventListener("mousemove", (event) => {
             const { left, top, width, height } = modalImagen.getBoundingClientRect();
@@ -291,7 +251,4 @@ function agregarListenersModalZoom() {
     }
 }
 
-// =========================================================
-
-// Inicia el proceso de carga
 cargarDetalleProducto();
