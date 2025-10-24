@@ -2,7 +2,7 @@
     width: 100%;
     padding: 20px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Evita que el contenido se desborde */
+    box-sizing: border-box;
 }
 
 h1 {
@@ -24,11 +24,10 @@ h2 {
 p {
     font-size: 16px;
     text-align: justify;
-    line-height: 1.6; /* Mejora el interlineado */
-    word-wrap: break-word; /* Asegura que el texto se ajuste correctamente */
+    line-height: 1.6;
+    word-wrap: break-word;
 }
 
-/* Diseño responsivo */
 @media (max-width: 600px) {
     .faq {
         padding: 10px;

@@ -12,7 +12,6 @@ html {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    /* Asegura que ocupe toda la pantalla */
 }
 
 main.content-grid {
@@ -20,8 +19,6 @@ main.content-grid {
     margin-bottom: 20px;
 }
 
-
-/* Estilo del Header */
 .header-custom {
     background-color: #282c34;
     color: white;
@@ -30,21 +27,15 @@ main.content-grid {
     align-items: center;
     justify-content: center;
     width: 100% !important;
-    /* Asegura que el Header ocupe toda la pantalla */
     box-sizing: border-box !important;
-    /* Incluye el padding dentro del ancho total */
     margin: 0 !important;
-    /* Elimina margen que podría causar la línea blanca */
 }
 
-
-/* Contenido principal */
 .content {
     display: flex;
     flex-wrap: wrap;
     padding: 20px;
     flex: 1;
-    /* Permite que el contenido principal ocupe todo el espacio disponible */
 }
 
 .column {
@@ -63,17 +54,13 @@ main.content-grid {
     object-fit: cover;
 }
 
-
 .footer .div5 {
     grid-column: 1 / -1;
-    /* Ocupa toda la fila */
     text-align: center;
     padding: 10px;
     background-color: #5A4325;
-    /* Color más oscuro para diferenciar derechos reservados */
 }
 
-/* Pantallas pequeñas */
 @media (max-width: 768px) {
     .header-custom {
         flex-direction: column;
@@ -97,14 +84,10 @@ main.content-grid {
     .parent {
         display: flex !important;
         flex-direction: column;
-        /* Apila los elementos verticalmente */
         gap: 15px !important;
-        /* Espacio entre los divs */
         padding: 10px;
         justify-content: center;
-        /* Centra los elementos verticalmente */
         align-items: center;
-        /* Centra los elementos horizontalmente */
         width: 100%;
         box-sizing: border-box;
     }
@@ -114,7 +97,6 @@ main.content-grid {
     }
 }
 
-/* Pantallas medianas */
 @media (min-width: 769px) and (max-width: 996px) {
     .header-custom {
         padding: 20px;
@@ -130,13 +112,10 @@ main.content-grid {
 
     .footer {
         grid-template-columns: repeat(2, 1fr);
-        /* 2 columnas en pantallas medianas */
         grid-template-rows: repeat(3, auto);
-        /* 3 filas */
     }
 }
 
-/* Pantallas grandes */
 @media (min-width: 997px) {
     .header-custom {
         padding: 30px 40px;
@@ -152,8 +131,6 @@ main.content-grid {
 
     .footer {
         grid-template-columns: repeat(4, 1fr);
-        /* Mantiene 4 columnas en pantallas grandes */
         grid-template-rows: repeat(2, auto);
-        /* 2 filas */
     }
 }

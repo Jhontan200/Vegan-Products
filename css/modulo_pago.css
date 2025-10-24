@@ -16,33 +16,24 @@ body {
     line-height: 1.5;
 }
 
-/* El footer está forzado a 0 solo si existiera en el entorno */
 footer {
     margin-top: 0 !important;
 }
 
-
 .checkout-container {
-    margin: 2rem 20rem; 
+    margin: 2rem 20rem;
     padding: 30px;
     background-color: #fff;
     max-width: 1400px;
     border-radius: 12px;
     box-shadow: 0 10px 20px var(--color-shadow);
-
-    /* Definición de Columnas: 65% (Forms) | 35% (Summary/Payment) */
     grid-template-columns: 65% 35%;
-
-    /* Asignación de nombres de áreas: Una sola fila */
     grid-template-areas:
         "forms summary";
 }
 
-/* ASIGNACIÓN DE ÁREAS A LOS CONTENEDORES */
-
 .forms-column {
     grid-area: forms;
-    /* Columna Izquierda */
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -50,18 +41,14 @@ footer {
 
 .summary-column {
     grid-area: summary;
-    /* Columna Derecha (Resumen, Pago, Total) */
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* Quitamos la necesidad del Resumen de carrito de ocupar todo el ancho (grid-column: 1 / -1) */
 .resumen-carrito {
     margin-top: 0;
 }
-
-/* 4. ESTILOS DE CONTENEDORES INDIVIDUALES */
 
 .acciones-finales,
 .formulario,
@@ -69,9 +56,7 @@ footer {
 .metodo-pago-container {
     padding: 25px;
     border: 1px solid var(--color-border-light);
-    /* Borde sutil */
     box-shadow: 0 3px 10px var(--color-shadow);
-    /* Sombra suave */
     background-color: #fff;
     border-radius: 10px;
 }
@@ -82,39 +67,28 @@ footer {
     flex: 1;
 }
 
-/* Títulos */
 .section-title {
     font-size: 1.5rem;
-    /* 24px */
     color: var(--color-secondary);
     font-weight: 700;
     margin-bottom: 20px;
     text-align: left;
-    /* Títulos a la izquierda, más profesional */
     border-bottom: 2px solid var(--color-primary);
     padding-bottom: 10px;
 }
 
 .subsection-title {
     font-weight: 700;
-    /* Lo hacemos más fuerte para diferenciar bloques */
     font-size: 1.25rem;
-    /* Más grande */
     margin-top: 20px;
-    /* Separación de la línea divisoria */
     margin-bottom: 15px;
     color: var(--color-primary);
 }
-
-/* ====================================================================== */
-/* ESTILOS DE FORMULARIO (INPUTS y SELECTS) */
-/* ====================================================================== */
 
 .form-dato {
     padding: 12px;
     margin-bottom: 15px;
     border: 1px solid var(--color-border-light);
-    /* Borde más delgado */
     border-radius: 6px;
     font-size: 1rem;
     width: 100%;
@@ -131,13 +105,11 @@ footer {
 select {
     border: 1px solid var(--color-border-light);
     padding-right: 30px;
-    /* Espacio para flecha custom */
 }
 
 .cliente-label {
     font-weight: 600;
     font-size: 1rem;
-    /* Más pequeño para armonizar */
     display: block;
     margin-bottom: 5px;
     color: var(--color-secondary);
@@ -170,9 +142,6 @@ select {
     border-top: 1px solid var(--color-border-light);
 }
 
-
-
-
 button {
     padding: 12px;
     margin: 8px 0;
@@ -187,7 +156,6 @@ button {
 
 .btn-primary {
     background-color: var(--color-accent);
-    /* Verde Éxito */
     color: white;
     font-size: 1.1rem;
 }
@@ -199,7 +167,6 @@ button {
 
 .btn-secondary {
     background-color: #95a5a6;
-    /* Gris Suave */
     color: white;
 }
 
@@ -209,7 +176,6 @@ button {
 
 .btn-tertiary {
     background-color: #e74c3c;
-    /* Rojo para 'Vaciar' */
     color: white;
 }
 
@@ -237,11 +203,12 @@ button {
     margin-bottom: 25px;
 }
 
-.pago-finalizar{
+.pago-finalizar {
     background-color: #80cc28;
     color: white;
 }
-.pago-vaciar{
+
+.pago-vaciar {
     background-color: #c0392b;
     color: white;
 }
@@ -276,7 +243,6 @@ button {
     justify-content: center;
     font-size: 0.75rem;
     color: #7f8c8d;
-
     border: 3px solid transparent;
     border-radius: 8px;
     transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
@@ -289,7 +255,6 @@ button {
 
 .metodo-img.seleccionado {
     border-color: var(--color-accent);
-    /* Borde Seleccionado: Verde Éxito */
     box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
 }
 
@@ -298,10 +263,6 @@ button {
     margin-top: 5px;
     color: var(--color-secondary);
 }
-
-/* ====================================================================== */
-/* ESTILOS DE RESUMEN DE CARRITO */
-/* ====================================================================== */
 
 .resumen-header {
     display: flex;
@@ -336,9 +297,7 @@ button {
     gap: 15px;
     padding: 15px;
     border: 1px solid #ecf0f1;
-    /* Borde muy sutil */
     border-left: 5px solid var(--color-primary);
-    /* Borde de acento */
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -346,7 +305,6 @@ button {
 
 .pago-img {
     width: 60px;
-    /* Más pequeño */
     height: 60px;
     object-fit: cover;
     border-radius: 4px;
@@ -413,17 +371,11 @@ button {
     font-weight: 700;
     color: var(--color-primary);
     margin-left: auto;
-    /* Empuja al final */
 }
-
-/* ====================================================================== */
-/* MEDIA QUERIES (RESPONSIVE) */
-/* ====================================================================== */
 
 @media (max-width: 1024px) {
     .checkout-container {
         grid-template-columns: 1fr;
-        /* Stack Forms above Summary */
         grid-template-areas:
             "forms"
             "summary";
@@ -501,12 +453,11 @@ button {
     .pago-total {
         font-size: 2rem !important;
     }
-    h1{
+
+    h1 {
         font-size: 1.5rem;
     }
 }
-
-
 
 .modal-pago {
     position: fixed;
@@ -520,14 +471,14 @@ button {
     justify-content: center;
     z-index: 9999;
 }
+
 .label-izquierda {
-    display: block; /* Ocupa toda la línea */
-    text-align: left; /* Alinea el texto a la izquierda */
-    margin-bottom: 5px; /* Espacio entre el label y el input */
-    font-weight: bold; /* (Opcional) Estilizar el label */
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
     margin-left: 30px;
 }
-
 
 .modal-contenido {
     background: white;
@@ -537,6 +488,7 @@ button {
     width: 100%;
     text-align: center;
 }
+
 .modal-contenido input {
     display: block;
     margin: 10px auto;
@@ -566,16 +518,16 @@ button {
     color: white;
 }
 
-.pago-total{
+.pago-total {
     color: #1e8449;
 }
 
-h2{
+h2 {
     text-align: center;
     color: #063519;
 }
 
-h1{
+h1 {
     text-align: center;
     color: #063519;
     margin-top: 0;

@@ -2,7 +2,7 @@
     width: 100%;
     padding: 20px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Evita cortes */
+    box-sizing: border-box;
 }
 
 h1 {
@@ -26,7 +26,6 @@ p {
     line-height: 1.6;
 }
 
-/* Responsivo */
 @media (max-width: 600px) {
     .privacy {
         padding: 10px;

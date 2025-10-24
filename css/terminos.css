@@ -2,7 +2,7 @@
     width: 100%;
     padding: 20px;
     font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Evita cortes */
+    box-sizing: border-box;
 }
 
 h1 {
@@ -20,7 +20,8 @@ h2 {
     font-weight: bold;
 }
 
-p, ul {
+p,
+ul {
     font-size: 16px;
     text-align: justify;
     line-height: 1.6;
@@ -30,7 +31,6 @@ ul {
     padding-left: 20px;
 }
 
-/* Responsivo */
 @media (max-width: 600px) {
     .terms {
         padding: 10px;
@@ -44,7 +44,8 @@ ul {
         font-size: 18px;
     }
 
-    p, ul {
+    p,
+    ul {
         font-size: 14px;
     }
 }

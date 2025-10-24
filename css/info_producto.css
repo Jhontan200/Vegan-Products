@@ -1,42 +1,32 @@
-/* Estilos generales */
-
 footer {
     margin-top: 0 !important;
 }
 
-/* ========================================= */
-/* ESTILOS DEL BREADCRUMB */
-/* ========================================= */
 .breadcrumb {
     padding: 15px 20px;
-    background-color: #f8f8f8; /* Fondo claro (manteniendo el tono) */
+    background-color: #f8f8f8;
     margin-bottom: 20px;
     font-size: 16px;
     border-bottom: 1px solid #ddd;
 }
 
 .breadcrumb a {
-    color: black; /* Tono tierra/marrón oscuro para el texto de navegación no activo */
+    color: black;
     text-decoration: none;
     transition: color 0.2s;
     font-weight: 500;
 }
 
 .breadcrumb a:hover {
-    color: #387719; /* Verde para el hover */
+    color: #387719;
     text-decoration: underline;
 }
 
 .breadcrumb .activo {
-    /* El nombre del producto actual */
-    color: #387719; /* 🛑 CAMBIO: Verde Principal para el elemento activo */
+    color: #387719;
     font-weight: bold;
 }
 
-
-/* ========================================= */
-/* Sección del producto */
-/* ========================================= */
 .info-pro-producto {
     height: auto;
     width: 100%;
@@ -49,14 +39,12 @@ footer {
     margin: 0;
 }
 
-/* Contenedor principal */
 .info-pro-contenedor {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
 }
 
-/* Imagen del producto */
 .info-pro-imagen {
     flex: 1;
     text-align: center;
@@ -70,22 +58,19 @@ footer {
     height: 400px;
     border: 1px solid #ccc;
     object-fit: contain;
-
 }
 
-/* Zoom de imagen */
 .zoom-imagen {
     transition: transform 0.3s ease-in-out;
     transform-origin: center;
     cursor: zoom-in;
 }
 
-/* Etiqueta de Agotado sobre la imagen */
 .agotado-tag {
     position: absolute;
     top: 20px;
     right: 20px;
-    background-color: #D9534F; /* Rojo para advertencia de agotado */
+    background-color: #D9534F;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -93,7 +78,6 @@ footer {
     z-index: 10;
 }
 
-/* Información del producto */
 .info-pro-informacion {
     flex: 1;
     padding: 20px;
@@ -103,29 +87,27 @@ footer {
 .info-pro-nombre {
     font-size: 35px;
     font-weight: bold;
-    color: black; /* 🛑 CAMBIO: Verde para el nombre */
+    color: black;
 }
 
 .info-pro-precio {
     font-size: 27px;
-    color: #387719; /* 🛑 CAMBIO: Verde para el precio */
+    color: #387719;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
-/* Indicador de Stock */
 .info-pro-stock {
     font-size: 18px;
     margin-bottom: 15px;
     font-weight: bold;
-    color: #38761d; /* Verde para stock disponible */
+    color: #38761d;
 }
 
 .info-pro-stock.agotado-stock {
-    color: #cc0000; /* Rojo para stock agotado */
+    color: #cc0000;
 }
 
-/* Acciones */
 .info-pro-acciones {
     display: flex;
     align-items: center;
@@ -134,7 +116,6 @@ footer {
     margin-bottom: 15px;
 }
 
-/* Valor de Cantidad */
 .info-pro-valor {
     padding: 8px 12px;
     font-size: 20px;
@@ -149,8 +130,8 @@ footer {
 .info-pro-agregar {
     padding: 10px 15px;
     border: none;
-    background-color: #80CC28; /* 🛑 CAMBIO: Verde Principal para el botón AGREGAR */
-    color: white; /* Letras blancas para contraste */
+    background-color: #80CC28;
+    color: white;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
@@ -160,15 +141,15 @@ footer {
 }
 
 .info-pro-agregar:hover {
-    background-color: #2a5a14; /* Tono de verde más oscuro al pasar el mouse */
+    background-color: #2a5a14;
 }
 
-/* Estado Deshabilitado */
 .info-pro-agregar[disabled] {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
 }
+
 .info-pro-decrementar[disabled],
 .info-pro-incrementar[disabled] {
     background-color: #ccc !important;
@@ -176,7 +157,6 @@ footer {
     color: #666 !important;
 }
 
-/* Descripción */
 .info-pro-descripcion {
     padding: 20px;
     margin-top: 10px;
@@ -192,18 +172,17 @@ footer {
 }
 
 .titulo-descripcion {
-    color: #387719; /* 🛑 CAMBIO: Verde para títulos de sección */
+    color: #387719;
     font-size: 30px;
     text-align: center;
     margin-bottom: 15px;
 }
 
-/* Botones de cantidad */
 .info-pro-decrementar {
     padding: 8px 14px !important;
     font-size: 20px !important;
     font-weight: bold;
-    background-color: #E5E3CE; /* Botón claro (manteniendo el contraste) */
+    background-color: #E5E3CE;
     color: black;
     cursor: pointer;
     border-radius: 5px;
@@ -215,7 +194,7 @@ footer {
     padding: 8px 12px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #17542A; /* 🛑 CAMBIO: Verde Principal para el botón INCREMENTAR */
+    background-color: #17542A;
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -224,20 +203,15 @@ footer {
 }
 
 .info-pro-decrementar:hover:not([disabled]) {
-    background-color: #d1ccae; /* Tono claro más oscuro */
+    background-color: #d1ccae;
     color: black;
 }
 
 .info-pro-incrementar:hover:not([disabled]) {
-    background-color: #2a5a14; /* Tono de verde más oscuro al pasar el mouse */
+    background-color: #2a5a14;
     color: white;
 }
 
-/* ========================================= */
-/* Media Queries */
-/* ========================================= */
-
-/* Pantallas medianas (tablets) */
 @media (max-width: 768px) {
     .info-pro-contenedor {
         align-items: center;
@@ -281,9 +255,7 @@ footer {
     }
 }
 
-/* Pantallas pequeñas (móviles) */
 @media (max-width: 480px) {
-    
     .info-pro-contenedor {
         flex-direction: column;
         text-align: center;
@@ -292,7 +264,8 @@ footer {
     .info-pro-imagen img {
         height: 250px;
     }
-    .info-pro-imagen{
+
+    .info-pro-imagen {
         margin-right: 44px;
     }
 
@@ -305,6 +278,7 @@ footer {
         font-size: 30px;
         margin-right: 3rem;
     }
+
     .info-pro-stock {
         margin-right: 3rem;
     }
@@ -326,14 +300,17 @@ footer {
         padding: 5px 10px;
         font-size: 16px !important;
     }
+
     .info-pro-incrementar {
         padding: 6px 10px;
         font-size: 20px;
     }
-    .info-pro-agregar{
+
+    .info-pro-agregar {
         margin-right: 3rem;
     }
-    .info-pro-valor{
+
+    .info-pro-valor {
         font-size: 15px !important;
     }
 
@@ -347,12 +324,9 @@ footer {
         text-align: center;
         margin-right: 3rem;
     }
-    
+
 }
 
-/* ========================================= */
-/* Estilos del Modal */
-/* ========================================= */
 .modal {
     display: flex;
     opacity: 0;
@@ -368,11 +342,12 @@ footer {
     align-items: center;
     transition: opacity 0.5s ease;
 }
+
 .modal.activo {
     opacity: 1;
     pointer-events: auto;
 }
-/* Contenedor interno del modal */
+
 .modal-contenido {
     position: relative;
     display: flex;
@@ -380,7 +355,6 @@ footer {
     align-items: center;
 }
 
-/* Imagen dentro del modal */
 .modal-imagen {
     max-width: 90vw;
     max-height: 90vh;
@@ -388,18 +362,16 @@ footer {
     cursor: zoom-in;
 }
 
-/* Botón cerrar */
 .cerrar {
     position: absolute;
     top: 20px;
     right: 30px;
     font-size: 35px;
-    color: #80CC28; /* 🛑 CAMBIO: Verde Principal para el botón de cerrar */
+    color: #80CC28;
     cursor: pointer;
     z-index: 1001;
 }
 
-/* Responsive para móviles */
 @media (max-width: 480px) {
     .cerrar {
         top: 115px !important;

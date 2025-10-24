@@ -1,16 +1,12 @@
-/* Estilos generales */
 body {
-    
     margin: 0;
     padding: 0;
 }
 
-/* Estilos del footer */
 footer {
     margin-top: 0 !important;
 }
 
-/* Contenedor principal */
 .container {
     display: flex;
     height: 750px;
@@ -19,7 +15,6 @@ footer {
     font-family: Arial, sans-serif;
 }
 
-/* Sección izquierda (Formulario) */
 .left {
     width: 50%;
     display: flex;
@@ -31,44 +26,39 @@ footer {
     transition: all 0.5s ease-in-out;
 }
 
-/* TITULO - CAMBIO DE COLOR CAFÉ A VERDE OSCURO */
-.title{
-    color: #38761d; /* Verde Bosque (antes #834700) */
+.title {
+    color: #38761d;
     font-size: 30px;
 }
 
-/* Estilos del formulario */
 .login-form {
     display: flex;
     flex-direction: column;
     width: 80%;
-    text-align: left; 
+    text-align: left;
 }
 
-/* Labels alineados a la izquierda - CAMBIO DE COLOR CAFÉ A VERDE OSCURO */
 .label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #38761d; /* Verde Bosque (antes #834700) */
+    color: #38761d;
     font-size: 20px;
     font-weight: bolder;
 }
 
-/* Contenedor de los campos de entrada */
 .input-container {
     position: relative;
     width: 100%;
 }
 
-/* Campos de entrada */
 .input {
     margin: 10px 0;
     padding: 10px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .password-wrapper {
@@ -81,8 +71,8 @@ footer {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; 
-    padding-right: 40px; 
+    box-sizing: border-box;
+    padding-right: 40px;
 }
 
 .toggle-password {
@@ -92,15 +82,14 @@ footer {
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 18px;
-    color: #777; 
+    color: #777;
 }
 
 .toggle-password:hover {
-    color: #333; 
+    color: #333;
 }
 
-/* Botones */
-.login-btn{
+.login-btn {
     padding: 10px;
     border: none;
     cursor: pointer;
@@ -110,19 +99,17 @@ footer {
     font-size: 16px;
 }
 
-/* Botón de Login - CAMBIO DE COLOR AMARILLO A VERDE LIMA */
 .login-btn {
-    background-color: #A3C736; /* Verde Lima (antes #F9C20C) */
+    background-color: #A3C736;
     color: white;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
-/* Botón de Registro - CAMBIO DE COLOR CAFÉ A VERDE OSCURO */
 .register-btn {
     display: inline-block;
     padding: 12px 20px;
-    background-color: #38761d; /* Verde Bosque (antes #834700) */
+    background-color: #38761d;
     color: white;
     font-weight: bold;
     text-decoration: none;
@@ -132,11 +119,9 @@ footer {
 }
 
 .register-btn:active {
-    opacity: 0; 
+    opacity: 0;
 }
 
-
-/* Sección derecha (Carrusel con imágenes de fondo) */
 .right {
     position: relative;
     width: 50%;
@@ -149,14 +134,12 @@ footer {
     transition: all 0.5s ease-in-out;
 }
 
-/* Carrusel */
 .carousel {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-/* Imágenes dentro del carrusel */
 .slide {
     position: absolute;
     width: 100%;
@@ -168,12 +151,10 @@ footer {
     transition: opacity 1s ease-in-out;
 }
 
-/* Mostrar la primera imagen al inicio */
 .slide:first-child {
     opacity: 1;
 }
 
-/* Capa oscura encima del fondo */
 .overlay {
     position: absolute;
     width: 100%;
@@ -186,53 +167,59 @@ footer {
     text-align: center;
 }
 
-/* Título de Bienvenida - CAMBIO DE COLOR AMARILLO A VERDE LIMA */
-.titulo-bienvenida{
-    color: #A3C736; /* Verde Lima (antes yellow) */
+.titulo-bienvenida {
+    color: #A3C736;
     font-size: 45px;
     margin-bottom: 0;
 }
-.texto-bienvenida{
+
+.texto-bienvenida {
     text-align: center;
     padding: 5px 15px;
     color: white;
     font-size: 20px;
 }
+
 @keyframes slideDown {
     from {
         opacity: 0;
         transform: translateY(-50px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
+
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
         height: auto;
     }
+
     .login-form {
-        width: 80%; 
-        max-width: 300px !important; 
-        margin: 0 35px 10px 0; 
+        width: 80%;
+        max-width: 300px !important;
+        margin: 0 35px 10px 0;
     }
-    .title{
+
+    .title {
         text-align: center !important;
         margin-right: 25px;
     }
 
-    .left, .right {
+    .left,
+    .right {
         width: 100%;
-        display: flex !important; 
+        display: flex !important;
         justify-content: center !important;
         align-items: center !important;
-        animation: slideDown 0.8s ease-in-out; 
+        animation: slideDown 0.8s ease-in-out;
     }
 
     .carousel {
         width: 100%;
-        height: 350px; 
+        height: 350px;
     }
 }

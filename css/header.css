@@ -17,7 +17,6 @@
   width: 100%;
 }
 
-
 .search-bar input {
   height: 40px;
   padding-right: 40px !important;
@@ -75,7 +74,6 @@
   background-color: #f8f9fa;
 }
 
-/* Pantallas pequeñas */
 @media (max-width: 768px) {
   .header {
     text-align: center;
@@ -106,7 +104,6 @@
   }
 }
 
-/* Pantallas medianas */
 @media (min-width: 769px) and (max-width: 996px) {
   .header {
     padding: 15px;
@@ -127,7 +124,6 @@
   }
 }
 
-/* Pantallas grandes */
 @media (min-width: 997px) {
   .header {
     padding: 20px 40px;

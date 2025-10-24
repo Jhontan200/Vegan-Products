@@ -1,7 +1,7 @@
-/* Contenedor principal */
-footer{
+footer {
     margin-top: 0 !important;
 }
+
 .container {
     display: flex;
     height: 750px;
@@ -10,7 +10,6 @@ footer{
     font-family: Arial, sans-serif;
 }
 
-/* Sección izquierda (Carrusel) */
 .left {
     position: relative;
     width: 50%;
@@ -22,7 +21,6 @@ footer{
     transition: all 0.5s ease-in-out;
 }
 
-/* Sección derecha (Formulario) */
 .right {
     width: 50%;
     display: flex;
@@ -33,7 +31,6 @@ footer{
     background-color: #ffffff;
 }
 
-/* Formulario de creación de cuenta */
 .register-form {
     display: flex;
     flex-direction: column;
@@ -41,17 +38,17 @@ footer{
     text-align: left;
 }
 
-/* Labels y campos (Mismo ancho para todos) */
-/* Labels - CAMBIO DE COLOR CAFÉ A VERDE OSCURO */
 .label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
     font-size: 16px;
-    color: #38761d; /* Verde Bosque (antes #834700) */
+    color: #38761d;
 }
 
-.input, .register-btn, .cancel-btn {
+.input,
+.register-btn,
+.cancel-btn {
     width: 100%;
     padding: 12px;
     margin-bottom: 0.5rem;
@@ -60,9 +57,8 @@ footer{
     box-sizing: border-box;
 }
 
-/* Botón de crear cuenta - CAMBIO DE COLOR CAFÉ A VERDE OSCURO */
 .register-btn {
-    background-color: #38761d; /* Verde Bosque (antes #834700) */
+    background-color: #38761d;
     color: white;
     font-weight: bold;
     border: none;
@@ -71,7 +67,7 @@ footer{
 }
 
 .register-btn:hover {
-    background-color: #274f14; /* Tono de verde más oscuro para hover (antes #602805) */
+    background-color: #274f14;
 }
 
 .cancel-btn {
@@ -87,14 +83,13 @@ footer{
     background-color: #585756;
     color: #b6b5b3;
 }
-/* Estilos del carrusel */
+
 .carousel {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-/* Imágenes dentro del carrusel */
 .slide {
     position: absolute;
     width: 100%;
@@ -105,7 +100,7 @@ footer{
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
-/* Overlay sobre el carrusel */
+
 .overlay {
     position: absolute;
     width: 100%;
@@ -120,31 +115,28 @@ footer{
     z-index: 2;
 }
 
-/* Carrusel detrás del overlay */
 .carousel {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-/* Mostrar la primera imagen al inicio */
 .slide:first-child {
     opacity: 1;
 }
 
-/* Título de la sección de formulario - CAMBIO DE COLOR CAFÉ A VERDE OSCURO */
-.title{
-    color: #38761d; /* Verde Bosque (antes #834700) */
+.title {
+    color: #38761d;
     font-size: 25px;
 }
 
-/* Título del Overlay - CAMBIO DE COLOR AMARILLO A VERDE LIMA */
-.titulo-cuenta{
-    color: #A3C736; /* Verde Lima (antes yellow) */
+.titulo-cuenta {
+    color: #A3C736;
     font-size: 30px;
     margin-bottom: 0;
 }
-.texto-cuenta{
+
+.texto-cuenta {
     padding: 20px;
     text-align: center;
     font-size: 20px;
@@ -152,35 +144,37 @@ footer{
     font-weight: bold;
 }
 
-/* Animación de entrada */
 @keyframes slideDown {
     from {
         opacity: 0;
         transform: translateY(-50px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* ✅ Diseño responsivo */
 @media screen and (max-width: 768px) {
     .container {
-        flex-direction: column-reverse; /* Invierte el orden */
+        flex-direction: column-reverse;
         height: auto;
     }
+
     .register-form {
         width: 80%;
         max-width: 300px !important;
         margin: 0 35px 10px 0 !important;
     }
-    .title{
+
+    .title {
         text-align: center !important;
         margin-right: 25px;
     }
 
-    .left, .right {
+    .left,
+    .right {
         width: 100%;
         display: flex;
         animation: slideDown 0.8s ease-in-out;
